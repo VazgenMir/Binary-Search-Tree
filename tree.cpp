@@ -45,7 +45,7 @@ Node<T>* BST<T>::minNode(Node<T>* node) {
 }
 
 template <typename T>
-void BST<T>::insert(T value) {
+void BST<T>::insert(T value) {    //rec
     if (root == nullptr) {
         root = new Node<T>(value);
         return;
@@ -71,7 +71,7 @@ void BST<T>::insert(T value) {
 
 
 template <typename T>
-void BST<T>::print() {
+void BST<T>::print() {//del
     inorder(root);
 }
 
@@ -91,7 +91,7 @@ void BST<T>::preorder(Node<T>* node) {
         return;
     }
     std::cout << node->val << '|';
-    inorder(node->left);
+    inorder(node->left);    //in->pre
     inorder(node->right);
 }
 
@@ -100,7 +100,7 @@ void BST<T>::postorder(Node<T>* node) {
     if (!node) {
         return;
     }
-    inorder(node->left);
+    inorder(node->left);    //in->post
     inorder(node->right);
     std::cout << node->val << '|';
     
@@ -123,24 +123,26 @@ bool BST<T>::find(Node<T>* node, T value) {
 
 template <typename T>
 T BST<T>::min(Node<T>* node) {
-    if (!node->left) {
-        return node->val;
-    } else {
-        return min(node->left);
-    }
+    //if (!node->left) {
+    //    return node->val;
+    //} else {
+    //    return min(node->left);
+    //}
+    return !node->left ? node->val : min(node->left);
 }
 
 template <typename T>
 T BST<T>::max(Node<T>* node) {
-    if (!node->right) {
-        return node->val;
-    } else {
-        return max(node->right);
-    }
+    //if (!node->right) {
+    //    return node->val;
+    //} else {
+    //    return max(node->right);
+    //}
+    return !node->right ? node->val : max(node->right);
 }
 
 template <typename T>
-Node<T>* BST<T>::next(Node<T>* node, T value) {
+Node<T>* BST<T>::next(Node<T>* node, T value) {    //add parent pointer in Node and rec
     Node<T>* succ = nullptr;
     while (node) {
         if (value < node->val) {
@@ -175,7 +177,7 @@ Node<T>* BST<T>::minValueNode(Node<T>* node) {
 }
 
 template <typename T>
-Node<T>* BST<T>::erase(Node<T>* node,T value) {
+Node<T>* BST<T>::erase(Node<T>* node,T value) { // new logic for parent
     if (!node) return nullptr;
 
     if (value < node->val)
